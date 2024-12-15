@@ -2,11 +2,11 @@ import {
   By,
   RelativeBy,
   WebElement,
-  WebElementPromise
-} from 'selenium-webdriver';
+  WebElementPromise,
+} from "selenium-webdriver";
 
-import {ElementProperties} from './page-object';
-import {Element, LocateStrategy, NightwatchClient} from './index';
+import { ElementProperties } from "./page-object";
+import { Element, LocateStrategy, NightwatchClient } from "./index";
 
 export interface ScopedElement extends Element, PromiseLike<WebElement> {
   assert: ElementAssertions;
@@ -19,14 +19,14 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   findByText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): ScopedElement;
 
   findByRole(
-    role: 'heading',
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    role: "heading",
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly level?: number;
       readonly checked?: boolean;
       readonly current?: boolean | string;
@@ -38,7 +38,7 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   findByRole(
     role: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly current?: boolean | string;
       readonly checked?: boolean;
       readonly pressed?: boolean;
@@ -49,21 +49,21 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   findByPlaceholderText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): ScopedElement;
 
   findByLabelText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): ScopedElement;
 
   findByAltText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): ScopedElement;
@@ -74,14 +74,14 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   findAllByText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): Elements;
 
   findAllByRole(
-    role: 'heading',
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    role: "heading",
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly level?: number;
       readonly checked?: boolean;
       readonly current?: boolean | string;
@@ -93,7 +93,7 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   findAllByRole(
     role: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly current?: boolean | string;
       readonly checked?: boolean;
       readonly pressed?: boolean;
@@ -104,7 +104,7 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   getAllByRole(
     role: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly current?: boolean | string;
       readonly checked?: boolean;
       readonly pressed?: boolean;
@@ -115,14 +115,14 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   findAllByPlaceholderText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): Elements;
 
   findAllByAltText(
     text: string,
-    options?: Omit<ScopedSelectorObject, 'selector'> & {
+    options?: Omit<ScopedSelectorObject, "selector"> & {
       readonly exact?: boolean;
     }
   ): Elements;
@@ -135,7 +135,7 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   getPreviousElementSibling(): ScopedElement;
 
-  getShadowRoot(): Omit<ScopedElement, 'then'> & PromiseLike<ShadowRoot>;
+  getShadowRoot(): Omit<ScopedElement, "then"> & PromiseLike<ShadowRoot>;
 
   getId(): ElementValue<string>;
 
@@ -208,7 +208,10 @@ export interface ScopedElement extends Element, PromiseLike<WebElement> {
 
   rightClick(): Promise<WebElement>;
 
-  waitUntil(signalOrOptions: WaitUntilActions | WaitUntilOptions, waitOptions?: WaitUntilOptions): Promise<WebElement>;
+  waitUntil(
+    signalOrOptions: WaitUntilActions | WaitUntilOptions,
+    waitOptions?: WaitUntilOptions
+  ): Promise<WebElement>;
 
   isEnabled(): ElementValue<boolean>;
 
@@ -231,7 +234,16 @@ type WaitUntilOptions = {
   abortOnFailure?: boolean;
 };
 
-type WaitUntilActions = 'selected' | 'visible' | 'disabled' | 'enabled' | 'not.selected' | 'not.visible' | 'not.enabled' | 'present' | 'not.present';
+type WaitUntilActions =
+  | "selected"
+  | "visible"
+  | "disabled"
+  | "enabled"
+  | "not.selected"
+  | "not.visible"
+  | "not.enabled"
+  | "present"
+  | "not.present";
 
 export class Elements implements PromiseLike<WebElement[]> {
   constructor(
@@ -280,7 +292,6 @@ export class ElementsAssertions {
   constructor(elements: Elements, options: ElementsAssertionsOptions);
 
   get not(): ElementsAssertions;
-
 }
 
 export type ElementAssertionsOptions = {
@@ -325,7 +336,7 @@ export class ElementValue<T> implements PromiseLike<T> {
 
 export type ScopedSelectorObject = Omit<
   ElementProperties,
-  'webElement' | 'webElementId' | 'selector'
+  "webElement" | "webElementId" | "selector"
 > & {
   readonly selector: string | By | RelativeBy;
 };
@@ -360,16 +371,32 @@ export type ScopedElementRect = {
   readonly height: number;
 };
 
-export type DragAndDropDestination = {
-  readonly xOffset: number;
-  readonly yOffset: number;
-};
+export type DragAndDropDestination =
+  | {
+      readonly xOffset: number;
+      readonly yOffset: number;
+    }
+  | { readonly x: number; readonly y: number }
+  | WebElement;
 
 export interface ElementFunction
   extends Pick<
     ScopedElement,
-    'find' | 'get' | 'findElement' | 'findByText' | 'findByRole' | 'findByPlaceholderText' | 'findByLabelText' | 'findByAltText' |
-    'findAll' | 'getAll' | 'findElements' | 'findAllByText' | 'findAllByRole' | 'findAllByPlaceholderText' | 'findAllByAltText'
+    | "find"
+    | "get"
+    | "findElement"
+    | "findByText"
+    | "findByRole"
+    | "findByPlaceholderText"
+    | "findByLabelText"
+    | "findByAltText"
+    | "findAll"
+    | "getAll"
+    | "findElements"
+    | "findAllByText"
+    | "findAllByRole"
+    | "findAllByPlaceholderText"
+    | "findAllByAltText"
   > {
   (selector: ScopedElementSelector): ScopedElement;
   (
